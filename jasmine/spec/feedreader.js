@@ -34,7 +34,7 @@ $(function() {
         it('have non empty URLs', function () {
             for (var i = 0; i < allFeeds.length; i++) {
                 var feed = allFeeds[i];
-                expect(typeof feed.url).not.toBe('undefined');
+                expect(typeof feed.url).toBeDefined();
                 expect(feed.url).not.toBe('');
             }
         });
@@ -47,7 +47,7 @@ $(function() {
         it('have non empty names', function () {
             for (var i = 0; i < allFeeds.length; i++) {
                 var feed = allFeeds[i];
-                expect(typeof feed.name).not.toBe('undefined');
+                expect(typeof feed.name).toBeDefined();
                 expect(feed.name).not.toBe('');
             }
         });
@@ -119,7 +119,7 @@ $(function() {
         describe('New Feed Selection', function () {
             /* DONE: Write a new test suite named "New Feed Selection" */
 
-            var listHeadings = [];
+            var feedContent1;
 
             /* DONE: Write a test that ensures when a new feed is loaded
              * by the loadFeed function that the content actually changes.
@@ -127,17 +127,9 @@ $(function() {
              */
             it('actually changes content', function (done) {
 
-                var entryClasses = document.getElementsByClassName('entry');
-                expect(entryClasses.length).toBeGreaterThan(0);
-                for (var i = 0; i < entryClasses.length; i++) {
-                    var entry = entryClasses[i];
-                    var h2Tags = entry.getElementsByTagName('h2');
-                    expect(h2Tags.length).toBeGreaterThan(0);
-                    for (var j = 0; j < h2Tags.length; j++) {
-                        var h2 = h2Tags[j];
-                        listHeadings.push(h2.textContent);
-                    }
-                }
+                var feedClasses = document.getElementsByClassName('feed');
+                expect(feedClasses.length).toBe(1);
+                feedContent = feedClasses[0].innerHTML;
 
                 done();
             });
@@ -150,30 +142,14 @@ $(function() {
 
                 it('has different headlines from 1st feed', function(done) {
 
-                    var listHeadings2 = [];
+                    var feedContent2;
 
-                    var entryClasses2 = document.getElementsByClassName('entry');
-                    expect(entryClasses2.length).toBeGreaterThan(0);
-                    for (var i = 0; i < entryClasses2.length; i++) {
-                        var entry2 = entryClasses2[i];
-                        var h2Tags2 = entry2.getElementsByTagName('h2');
-                        expect(h2Tags2.length).toBeGreaterThan(0);
-                        for (var j = 0; j < h2Tags2.length; j++) {
-                            var h2_2 = h2Tags2[j];
-                            listHeadings2.push(h2_2.textContent);
-                        }
-                    }
+                    var feedClasses2 = document.getElementsByClassName('feed');
+                    expect(feedClasses2.length).toBe(1);
+                    feedContent2 = feedClasses2[0].innerHTML;
 
                     // now compare the 1st list to the 2nd and verify they differ.
-                    var same = listHeadings.length === listHeadings2.length;
-
-                    for (var a = 0; a < listHeadings.length; a++) {
-                        if (listHeadings2[a])
-                            same = same && listHeadings[a] === listHeadings2[a];
-                        if (!same) break;
-                    }
-
-                    if (same) throw Error('Headlines are identical');
+                    if (feedContent1 == feedContent2) throw Error('Content is identical');
 
                     done();
 
