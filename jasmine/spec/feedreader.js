@@ -32,11 +32,10 @@ $(function() {
          * and that the URL is not empty.
          */
         it('have non empty URLs', function () {
-            for (var i = 0; i < allFeeds.length; i++) {
-                var feed = allFeeds[i];
+            allFeeds.forEach(function (feed) {
                 expect(typeof feed.url).toBeDefined();
                 expect(feed.url).not.toBe('');
-            }
+            });
         });
 
 
@@ -45,11 +44,10 @@ $(function() {
          * and that the name is not empty.
          */
         it('have non empty names', function () {
-            for (var i = 0; i < allFeeds.length; i++) {
-                var feed = allFeeds[i];
+            allFeeds.forEach(function (feed) {
                 expect(typeof feed.name).toBeDefined();
                 expect(feed.name).not.toBe('');
-            }
+            });
         });
 
     });
@@ -115,46 +113,38 @@ $(function() {
             expect(entryClasses.length).toBeGreaterThan(0);
             done();
         });
+    });
 
-        describe('New Feed Selection', function () {
-            /* DONE: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function () {
+        /* DONE: Write a new test suite named "New Feed Selection" */
 
-            var feedContent1;
 
-            /* DONE: Write a test that ensures when a new feed is loaded
-             * by the loadFeed function that the content actually changes.
-             * Remember, loadFeed() is asynchronous.
-             */
-            it('actually changes content', function (done) {
+        var feedContent1;
+        var feedContent2;
 
-                var feedClasses = document.getElementsByClassName('feed');
-                expect(feedClasses.length).toBe(1);
-                feedContent1 = feedClasses[0].innerHTML;
+        beforeEach(function (done) {
+            loadFeed(0, function () {
 
-                done();
-            });
+                var feedClasses1 = document.getElementsByClassName('feed');
+                feedContent1 = feedClasses1[0].innerHTML;
 
-            describe('Second feed loading', function() {
-
-                beforeEach(function (done) {
-                    loadFeed(1, function () { done(); });
-                });
-
-                it('has different content from 1st feed', function(done) {
-
-                    var feedContent2;
-
+                loadFeed(1, function () {
                     var feedClasses2 = document.getElementsByClassName('feed');
-                    expect(feedClasses2.length).toBe(1);
                     feedContent2 = feedClasses2[0].innerHTML;
-
-                    expect(feedContent1).not.toBe(feedContent2);
-
                     done();
-
                 });
             });
         });
-    });
 
+        /* DONE: Write a test that ensures when a new feed is loaded
+         * by the loadFeed function that the content actually changes.
+         * Remember, loadFeed() is asynchronous.
+         */
+        it('actually changes content', function (done) {
+
+            expect(feedContent1).not.toBe(feedContent2);
+
+            done();
+        });
+    });
 }());
