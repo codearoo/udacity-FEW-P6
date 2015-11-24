@@ -129,7 +129,7 @@ $(function() {
 
                 var feedClasses = document.getElementsByClassName('feed');
                 expect(feedClasses.length).toBe(1);
-                feedContent = feedClasses[0].innerHTML;
+                feedContent1 = feedClasses[0].innerHTML;
 
                 done();
             });
@@ -140,7 +140,7 @@ $(function() {
                     loadFeed(1, function () { done(); });
                 });
 
-                it('has different headlines from 1st feed', function(done) {
+                it('has different content from 1st feed', function(done) {
 
                     var feedContent2;
 
@@ -148,8 +148,7 @@ $(function() {
                     expect(feedClasses2.length).toBe(1);
                     feedContent2 = feedClasses2[0].innerHTML;
 
-                    // now compare the 1st list to the 2nd and verify they differ.
-                    if (feedContent1 == feedContent2) throw Error('Content is identical');
+                    expect(feedContent1).not.toBe(feedContent2);
 
                     done();
 
