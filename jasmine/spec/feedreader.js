@@ -33,7 +33,7 @@ $(function() {
          */
         it('have non empty URLs', function () {
             allFeeds.forEach(function (feed) {
-                expect(typeof feed.url).not.toBe('undefined');
+                expect(feed.url).toBeDefined();
                 expect(feed.url).not.toBe('');
             });
         });
@@ -45,7 +45,7 @@ $(function() {
          */
         it('have non empty names', function () {
             allFeeds.forEach(function (feed) {
-                expect(typeof feed.name).not.toBe('undefined');
+                expect(feed.name).toBeDefined();
                 expect(feed.name).not.toBe('');
             });
         });
@@ -142,7 +142,9 @@ $(function() {
          */
         it('actually changes content', function (done) {
 
-            expect(feedContent1).not.toBe(feedContent2);
+            // as per reviewer recommendation, toEqual to test contents of array
+            // rather than toBe which tests the object itself.
+            expect(feedContent1).not.toEqual(feedContent2);
 
             done();
         });
